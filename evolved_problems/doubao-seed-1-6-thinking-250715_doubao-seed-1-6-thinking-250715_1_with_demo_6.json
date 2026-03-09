@@ -1,0 +1,54 @@
+[
+  {
+    "status": "failure",
+    "result_data": {
+      "status": false,
+      "failure_stage": "solvability",
+      "new_problem": null,
+      "solvability": false,
+      "solvability_verifier_output": null,
+      "difficulty": false,
+      "difficulty_verifier_output": null
+    },
+    "failure_counts": {
+      "evolution": 0,
+      "solvability": 1,
+      "difficulty": 0
+    },
+    "original_problem": {
+      "problem_description": "There are $8!= 40320$ eight-digit positive integers that use each of the digits $1, 2, 3, 4, 5, 6, 7, 8$ exactly once. Let $N$ be the number of these integers that are divisible by $22$. Find the difference between $N$ and $2025$.",
+      "solution_steps": "To find $N$, we determine how many permutations of the set $\\{1, 2, \\dots, 8\\}$ form an integer divisible by $22$. A number is divisible by $22$ if and only if it is divisible by both $2$ and $11$.\n\n**1. Use Symmetry for Divisibility by 2**\n*   For an integer to be divisible by $2$, iits units digit must be even ($2, 4, 6,$ or $8$).\n*   By symmetry, the count of valid integers ending in any specific even digit is the same. We will calculate the count for integers ending in $2$ and multiply by $4$ at the end.\n\n**2. Establish Conditions for Divisibility by 11**\n*   Let the decimal representation be $d_1 d_2 d_3 d_4 d_5 d_6 d_7 d_8$.\n*   The condition for divisibility by $11$ is that the alternating sum of digits is divisible by $11$: $(d_1 + d_3 + d_5 + d_7) - (d_2 + d_4 + d_6 + d_8) \\equiv 0 \\pmod{11}$.\n*   Let the odd-position digits be $O = \\{d_1, d_3, d_5, d_7\\}$ and even-position digits be $E = \\{d_2, d_4, d_6, d_8\\}$.\n*   Since the set of all digits is $\\{1, \\dots, 8\\}$, the total sum is $1+2+\\dots+8 = 36$. Let $S_E$ be the sum of digits in even positions. Then the sum of digits in odd positions is $36 - S_E$.\n*   The condition becomes $(36 - S_E) - S_E \\equiv 0 \\pmod{11} \\implies 36 - 2S_E \\equiv 0 \\pmod{11}$. Since $36 \\equiv 3 \\pmod{11}$, we need $2S_E \\equiv 3 \\equiv 14 \\pmod{11}$, which implies $S_E \\equiv 7 \\pmod{11}$.\n\n**3. Analyze the Case Where the Last Digit is 2**\n*   Fix $d_8 = 2$.\n*   The set of remaining even-position digits is $\\{d_2, d_4, d_6\\}$. Let their sum be $S_{sub} = d_2 + d_4 + d_6$.\n*   The full even-position sum is $S_E = S_{sub} + 2$. Substituting this into the congruence: $(S_{sub} + 2) \\equiv 7 \\pmod{11} \\implies S_{sub} \\equiv 5 \\pmod{11}$.\n*   The available digits to choose from for $\\{d_2, d_4, d_6\\}$ are $\\{1, 3, 4, 5, 6, 7, 8\\}$.\n*   We must find distinct triplets from this set that sum to $S_{sub}$ such that $S_{sub} \\equiv 5 \\pmod{11}$. Possible values for $S_{sub}$ given the range of available digits (min sum $1+3+4=8$, max sum $6+7+8=21$) restricts $S_{sub}$ to exactly $16$. (Note: 5 is too small, 27 is too big).\n\n**4. Count Valid Sets for the Triplets**\n*   We need subsets of $\\{1, 3, 4, 5, 6, 7, 8\\}$ with size 3 that sum to 16:\n    1.  $(1, 7, 8)$\n    2.  $(3, 5, 8)$\n    3.  $(3, 6, 7)$\n    4.  $(4, 5, 7)$\n*   There are exactly $4$ such sets.\n\n**5. Calculate Permutations**\n*   For each valid set of 3 digits for positions $d_2, d_4, d_6$:\n    *   There are $3! = 6$ ways to arrange them in those positions.\n    *   The remaining 4 digits go into the odd positions $d_1, d_3, d_5, d_7$. There are $4! = 24$ ways to arrange them.\n*   Total integers ending in 2: $4 \\text{ (sets)} \\times 6 \\text{ (even pos permutations)} \\times 24 \\text{ (odd pos permutations)} = 576$.\n\n**6. Final Calculation**\n*   Since the units digit can be any of $\\{2, 4, 6, 8\\}$ (4 options), total $N = 576 \\times 4 = 2304$.\n*   The difference between $N$ and $2025$ is $2304 - 2025 = 279$.",
+      "answer": "279",
+      "problem_id": 50
+    },
+    "problem_id": 50
+  },
+  {
+    "status": "failure",
+    "result_data": {
+      "status": false,
+      "failure_stage": "solvability",
+      "new_problem": {
+        "new_problem": "We have the 20 letters \\(A, B, \\dots, T\\) (20 letters total) randomly grouped into 10 unordered pairs. Each pair is written in alphabetical order (e.g., if paired with \\(G\\) and \\(F\\), it becomes \\(FG\\)), and the 10 pairs are sorted lexicographically. Let \\(P_G\\) denote the pair containing \\(G\\) and \\(P_K\\) denote the pair containing \\(K\\). Calculate the probability that \\(P_G\\) is the 7th element and \\(P_K\\) is the 8th element in the sorted list, with no pair between them.",
+        "new_solution_steps": "1. **Core Insight**: The sorted pairs are ordered by their first elements (\\(S\\), the smaller element in each pair). For \\(P_G\\) to be 7th and \\(P_K\\) 8th, their first elements must be the 7th and 8th largest in \\(S\\), with no elements between them.\n2. **Set Selection**: \\(S\\) must include \\(A-F\\) (6 elements, \\(s_1-s_6\\)), \\(G\\) (s_7), \\(H\\) (s_8), and 2 elements from \\(I-T\\) (s_9-s_10). This ensures \\(S\\) has size 10.\n3. **Pairing Constraints**: \\(G\\) pairs with a larger element from \\(I-T\\) (since \\(H\\) is paired with \\(K\\)). \\(H\\) must pair with \\(K\\) (to form \\(P_K = (H, K)\\)).\n4. **Counting Favorable Outcomes**: Choose 2 elements from \\(I-T\\) excluding \\(K\\) for \\(S\\), pair \\(H\\) with \\(K\\), pair \\(G\\) with a valid partner, and count valid bijections for remaining pairs.\n5. **Probability Calculation**: Divide favorable outcomes by total possible pairings ((20-1)!! = 654729075).",
+        "new_answer": "None"
+      },
+      "solvability": false,
+      "solvability_verifier_output": null,
+      "difficulty": false,
+      "difficulty_verifier_output": null
+    },
+    "failure_counts": {
+      "evolution": 0,
+      "solvability": 1,
+      "difficulty": 0
+    },
+    "original_problem": {
+      "problem_description": "The twelve letters $A, B, C, D, E, F, G, H, I, J, K,$ and $L$ are randomly grouped into six pairs of letters. The two letters in each pair are placed next to each other in alphabetical order to form six two-letter words, and then those six words are listed alphabetically. For example, a possible result is $AB, CJ, DG, EK, FL, HI$. The probability that the last word listed contains $G$ is $\\frac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. Find $m+n$.",
+      "solution_steps": "We need to find the probability that the word containing $G$ appears last in the alphabetically sorted list of 6 words.\n\n**1. Calculate the Size of the Sample Space**\n*   The total number of ways to partition 12 distinct items into 6 undefined pairs is calculated as follows:\n    *   Choose a partner for the first letter ($A$): 11 options.\n    *   Choose a partner for the next available letter: 9 options.\n    *   Continue this process: $11 \\times 9 \\times 7 \\times 5 \\times 3 \\times 1 = 10395$.\n*   This represents the denominator of our probability.\n\n**2. Define the Sets and Cases**\n*   Let $\\Sigma = \\{A, B, C, D, E, F\\}$ (letters alphabetically before $G$) and $\\Omega = \\{H, I, J, K, L\\}$ (letters alphabetically after $G$).\n*   For the word containing $G$ to be the last, let's denote the pair as $P_G$. Since pairs are internally ordered alphabetically, $G$ can either be the first letter (e.g., $GH$) or the second letter (e.g., $FG$) of the pair.\n\n**3. Case 1: $G$ is the first letter of the last word**\n*   The pair is of the form $(G, x)$ where $x \\in \\Omega$. There are 5 choices for $x$.\n*   For this word to be last, the other 5 words must start with letters that come before $G$. The available starting letters are the set $\\Sigma = \\{A, B, C, D, E, F\\}$.\n*   We have 10 remaining letters (6 from $\\Sigma$ and 4 remaining from $\\Omega$). We must form 5 pairs.\n*   To ensure all 5 words start with a letter from $\\Sigma$, we must use all characters in $\\Sigma$ as starting letters. Since there are 6 characters in $\\Sigma$ and only 5 words, one word must be formed entirely from $\\Sigma$ (consuming 2 letters), and the other 4 words must consist of one letter from $\\Sigma$ and one from $\\Omega$.\n    *   Choose the pair formed entirely from $\\Sigma$: $\\binom{6}{2} = 15$ ways.\n    *   Arrange the remaining 4 letters of $\\Sigma$ with the remaining 4 letters of $\\Omega$: $4! = 24$ ways.\n*   Total ways for Case 1: $5 \\text{ (choice of } x) \\times 15 \\times 24 = 1800$.\n\n**4. Case 2: $G$ is the second letter of the last word**\n*   The pair is of the form $(y, G)$ where $y \\in \\Sigma$.\n*   For this word to be last, every other word must start with a letter alphabetically after $y$ but before $G$? No, every other word must start with a letter *before* the starting letter of the $G$-pair, or if they start with a letter before $G$, the $G$-pair must have the \"highest\" starting letter.\n*   Consider the available letters. If the pair is $(y, G)$, the starting letter is $y$. To be the last word, all other 5 words must start with letters $\\le y$. But the remaining letters include all of $\\Sigma$ excluding $y$ plus all of $\\Omega$. The letters in $\\Omega$ ($H...L$) are greater than $G$. If any letter from $\\Omega$ is a starting letter of another word, that word would come *after* $(y, G)$.\n*   Therefore, all letters in $\\Omega$ must be the *second* letters of their respective pairs. This implies the first letters of all other pairs must be from $\\Sigma$.\n*   Consequently, the partner $y$ must be $F$. If $y < F$ (e.g., $E$), then $F$ is a remaining letter. $F$ must start a word. That word would be $(F, ?)$. Since alphabetic order puts $(F, ?)$ after $(E, G)$, the $G$-word would not be last.\n*   Thus, the pair must be $(F, G)$. The remaining starting letters are $A, B, C, D, E$, and they must be paired with $\\Omega = \\{H, I, J, K, L\\}$.\n*   There are $5! = 120$ ways to map these.\n*   Total ways for Case 2: $120$.\n\n**5. Probability Calculation**\n*   Total favorable outcomes: $1800 + 120 = 1920$.\n*   Total possible outcomes: $10395$.\n*   Probability: $\\frac{1920}{10395}$.\n*   Simplify the fraction (dividing both by Greatest Common Divisor): $1920 = 15 \\times 128$ and $10395 = 15 \\times 693$. GCD is 15.\n*   Reduced fraction: $\\frac{128}{693}$.\n*   $m = 128, n = 693$. These are relatively prime ($128=2^7$, $693$ is odd).\n\n**6. Final Answer**\n*   $m + n = 128 + 693 = 821$.",
+      "answer": "821",
+      "problem_id": 51
+    },
+    "problem_id": 51
+  }
+]
